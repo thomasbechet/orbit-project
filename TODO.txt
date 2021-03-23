@@ -1,3 +1,4 @@
 TODO-list:
 [ ] : Prendre en compte la profondeur du rayon avec le depth-buffer.
 [ ] : Optimiser le rendu des atmosphères.
+[ ] : Permettre le rendu de plusieurs planètes

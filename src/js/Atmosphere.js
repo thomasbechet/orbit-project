@@ -1,6 +1,6 @@
 var THREE = require('three')
-import fragmentShaderSource from 'raw-loader!../assets/atmosphere.frag'
-import vertexShaderSource from 'raw-loader!../assets/atmosphere.vert'
+import fragmentShaderSource from 'raw-loader!../glsl/atmosphere.frag'
+import vertexShaderSource from 'raw-loader!../glsl/atmosphere.vert'
 
 export class Atmosphere {
   #geometry;
@@ -26,8 +26,8 @@ export class Atmosphere {
     this.#strength   = parameters.strength   ?? 10.0;
     this.#scatterRGB = parameters.scatterRGB ?? [700.0, 530.0, 440.0];
 
-    const planetRadius     = planet.radius ?? 5.0;
-    const atmosphereHeight = parameters.atmosphereHeight ?? 0.3;
+    const planetRadius     = planet.radius               ?? 5.0;
+    const height           = parameters.height ?? 0.3;
     const densityFalloff   = parameters.densityFalloff   ?? 5.0;
 
     // Create material
@@ -35,11 +35,11 @@ export class Atmosphere {
       transparent: true,
       side: THREE.BackSide,
       uniforms: {
-        resolution:       {value: new THREE.Vector2(window.innerWidth, window.innerHeight)},
+        resolution:       {value: new THREE.Vector2()},
         planetCenter:     {value: this.#planet.center},
         planetRadius:     {value: planetRadius},
-        atmosphereRadius: {value: planetRadius + atmosphereHeight},
-        sunPosition:      {value: new THREE.Vector3(1.0, 0.0, 0.0)},
+        atmosphereRadius: {value: planetRadius + height},
+        sunPosition:      {value: new THREE.Vector3(0.0, 0.0, 0.0)},
         scatterRGB:       {value: new THREE.Vector3(0.0, 0.0, 0.0)},
         densityFalloff:   {value: densityFalloff},
         colorBuffer:      {value: null},
@@ -83,8 +83,7 @@ export class Atmosphere {
   }
 
   set resolution(value) {
-    this.#material.uniforms.resolution.value.x = value[0];
-    this.#material.uniforms.resolution.value.y = value[1];
+    this.#material.uniforms.resolution.value.copy(value);
   }
 
   set depthBuffer(value) {

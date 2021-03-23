@@ -102,8 +102,8 @@ float linearizeDepth(float d, float zNear, float zFar)
 
 void main() {
     vec3 originalColor   = texture2D(colorBuffer, gl_FragCoord.xy / resolution.xy).xyz;
-    float depthNonLinear = texture2D(depthBuffer, gl_FragCoord.xy / resolution.xy).r;
-    float depth          = linearizeDepth(depthNonLinear, 0.1, 1000.0);
+    // float depthNonLinear = texture2D(depthBuffer, gl_FragCoord.xy / resolution.xy).r;
+    // float depth          = linearizeDepth(depthNonLinear, 0.1, 1000.0);
 
     vec3 rayOrigin    = cameraPosition;
     vec3 rayDirection = normalize(vertexWorldPosition.xyz - cameraPosition);
@@ -123,6 +123,6 @@ void main() {
     
         gl_FragColor = vec4(light, 1.0);
     } else {
-        gl_FragColor = vec4(0, 0, 0, 1);
+        gl_FragColor = vec4(0, 0, 0, 0);
     }       
 }
