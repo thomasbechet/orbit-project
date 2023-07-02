@@ -23,27 +23,27 @@ export class Atmosphere {
   constructor(planet, parameters) {
     this.#planet = planet;
 
-    this.#strength   = parameters.strength   ?? 10.0;
+    this.#strength = parameters.strength ?? 10.0;
     this.#scatterRGB = parameters.scatterRGB ?? [700.0, 530.0, 440.0];
 
-    const planetRadius     = planet.radius               ?? 5.0;
-    const height           = parameters.height ?? 0.3;
-    const densityFalloff   = parameters.densityFalloff   ?? 5.0;
+    const planetRadius = planet.radius ?? 5.0;
+    const height = parameters.height ?? 0.3;
+    const densityFalloff = parameters.densityFalloff ?? 5.0;
 
     // Create material
     this.#material = new THREE.ShaderMaterial({
       transparent: true,
       side: THREE.BackSide,
       uniforms: {
-        resolution:       {value: new THREE.Vector2()},
-        planetCenter:     {value: this.#planet.center},
-        planetRadius:     {value: planetRadius},
-        atmosphereRadius: {value: planetRadius + height},
-        sunPosition:      {value: new THREE.Vector3(0.0, 0.0, 0.0)},
-        scatterRGB:       {value: new THREE.Vector3(0.0, 0.0, 0.0)},
-        densityFalloff:   {value: densityFalloff},
-        colorBuffer:      {value: null},
-        depthBuffer:      {value: null}
+        resolution: { value: new THREE.Vector2() },
+        planetCenter: { value: this.#planet.center },
+        planetRadius: { value: planetRadius },
+        atmosphereRadius: { value: planetRadius + height },
+        sunPosition: { value: new THREE.Vector3(0.0, 0.0, 0.0) },
+        scatterRGB: { value: new THREE.Vector3(0.0, 0.0, 0.0) },
+        densityFalloff: { value: densityFalloff },
+        colorBuffer: { value: null },
+        depthBuffer: { value: null }
       },
       defines: {
         FLT_MAX: 10000.0,
@@ -56,12 +56,12 @@ export class Atmosphere {
 
     // Create geometry
     this.#geometry = new THREE.SphereGeometry(1.0, 30, 30);
-  
+
     // Create mesh
     this.#mesh = new THREE.Mesh(this.#geometry, this.#material);
 
     // Configure material scatterRGB
-    this.updateScatterRGB(); 
+    this.updateScatterRGB();
   }
 
   get mesh() {

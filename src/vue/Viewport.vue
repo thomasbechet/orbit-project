@@ -10,28 +10,33 @@ import { SceneRenderer } from '../js/SceneRenderer.js';
 
 export default {
   mounted: function() {
-    // Create camera
-    const camera = new THREE.PerspectiveCamera(
-      50, 
-      window.innerWidth / window.innerHeight, 
-      0.01, 
-      1100
-    );
-    camera.position.z = 5;
-    new OrbitControls(camera);
-
     // Create scene
     const sceneRenderer = new SceneRenderer(window.innerWidth, window.innerHeight);
     document.getElementById("container").appendChild(sceneRenderer.domElement);
     
+    const container = document.getElementById("container");
+
+    console.log(window.outerWidth, window.outerHeight);
+    console.log(container.offsetWidth, container.offsetHeight);
+
+    // Create camera
+    const camera = new THREE.PerspectiveCamera(
+      30, 
+      window.innerWidth / window.innerHeight, 
+      0.01, 
+      1100
+    );
+    const controls = new OrbitControls(camera, sceneRenderer.domElement);
+    camera.position.set(0, 0, 5);
+
     // Add a planet
     sceneRenderer.addPlanet({
       center: [0, 0, 0],
       radius: 3.0,
-      texturePath: './earth_8k.jpg',
+      texturePath: './earth_16k.jpg',
       atmosphere: {
-        height:         0.3,
-        densityFalloff: 5.0,
+        height:         0.4,
+        densityFalloff: 4.0,
         strength:       5.0,
         scatterRGB:     [700, 530, 440]
       }

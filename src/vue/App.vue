@@ -1,7 +1,14 @@
 <template>
-  <div id="app" class="myclass">
-    <Viewport/>
-  </div>
+  <v-app id="app">
+    <v-container class="d-flex">
+      <v-col>
+        <Viewport/>
+      </v-col>
+      <v-col>
+        <v-card-text>#1</v-card-text>
+      </v-col>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
@@ -16,10 +23,14 @@ export default {
 </script>
 
 <style>
-  body, html {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    min-height: 100vh;
-  }
+html {
+  overflow: hidden !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
 </style>
